@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-admin
+  labels:
+    app: web-admin
+spec:
+  selector:
+    matchLabels:
+      app: web-admin
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: web-admin
+    spec:
+      containers:
+        - name: php-apache
+          image: php-apache
+          ports:
+            - containerPort: 80
+          env:
+            - name: MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-configmap
+                  key: MYSQL_DATABASE
+            - name: MYSQL_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-configmap
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-configmap
+                  key: MYSQL_PASSWORD
