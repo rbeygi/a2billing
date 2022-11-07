@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: web-customer
-  replicas: 1
+  replicas: { { .Values.web-customer.replicaCount } }
   strategy:
     type: RollingUpdate
   template:
@@ -17,11 +17,21 @@ spec:
         app: web-customer
     spec:
       containers:
-        - name: php-apache
-          image: php-apache
+        - name: web-customer
+          image: {{ .Values.web-customer.image }}
           ports:
             - containerPort: 80
           env:
+            - name: MYSQL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-configmap
+                  key: MYSQL_HOST
+            - name: MYSQL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: mysql-configmap
+                  key: MYSQL_PORT
             - name: MYSQL_DATABASE
               valueFrom:
                 configMapKeyRef:
@@ -29,11 +39,11 @@ spec:
                   key: MYSQL_DATABASE
             - name: MYSQL_USER
               valueFrom:
-                configMapKeyRef:
-                  name: mysql-configmap
+                secretKeyRef:
+                  name: mysql-secret
                   key: MYSQL_USER
             - name: MYSQL_PASSWORD
               valueFrom:
-                configMapKeyRef:
-                  name: mysql-configmap
+                secretKeyRef:
+                  name: mysql-secret
                   key: MYSQL_PASSWORD

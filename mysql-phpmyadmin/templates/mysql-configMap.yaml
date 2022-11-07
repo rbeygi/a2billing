@@ -3,7 +3,6 @@ kind: ConfigMap
 metadata:
   name: mysql-configmap
 data:
-  MYSQL_ROOT_PASSWORD: "testest"
-  MYSQL_DATABASE: "asterisk"
-  MYSQL_USER: "asterisk"
-  MYSQL_PASSWORD: "asterisk"
+  MYSQL_DATABASE: "mya2billing"
+  MYSQL_HOST: "mysql"
+  MYSQL_PORT: "3306"

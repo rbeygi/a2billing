@@ -8,14 +8,14 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: /customer
+        path: {{ .Values.web-customer.ingressPath }}
         backend:
           service:
             name: web-customer
             port:
               number: 80
       - pathType: Prefix
-        path: /admin
+        path: {{ .Values.web-admin.ingressPath }}
         backend:
           service:
             name: web-admin

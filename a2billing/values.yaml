@@ -1,0 +1,13 @@
+web-admin:
+  replicaCount: 1
+  image: admin:${ADMIN_TAG_NAME}
+  ingressPath: /admin
+
+web-customer:
+  replicaCount: 1
+  image: customer:${CUSTOMER_TAG_NAME}
+  ingressPath: /customer
+
+asterisk:
+  replicaCount: 1
+  image: asterisk:${ASTERISK_TAG_NAME}

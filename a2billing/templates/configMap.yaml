@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: asterisk-configmap
+data:
+  DOMAIN: "cluster"
+  LANG: "ru_RU.utf8"
+  LC_ALL: "ru_RU.utf8"
+  LANGUAGE: "ru_RU.utf8"
+  TZ: "Asia/Tehran"
