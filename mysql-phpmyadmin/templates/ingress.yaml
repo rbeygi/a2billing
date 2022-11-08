@@ -1,4 +1,4 @@
-Version: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: phpmyadmin-ingress
@@ -8,7 +8,7 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: {{ .Values.phpmyadmin.ingressPath}}
+        path: {{ .Values.phpmyadmin.ingressPath }}
         backend:
           service:
             name: phpmyadmin

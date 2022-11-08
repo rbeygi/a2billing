@@ -1,13 +1,13 @@
-web-admin:
+webAdmin:
   replicaCount: 1
-  image: admin:${ADMIN_TAG_NAME}
+  image: admin:dev
   ingressPath: /admin
 
-web-customer:
+webCustomer:
   replicaCount: 1
-  image: customer:${CUSTOMER_TAG_NAME}
+  image: customer:dev
   ingressPath: /customer
 
 asterisk:
   replicaCount: 1
-  image: asterisk:${ASTERISK_TAG_NAME}
+  image: asterisk:dev

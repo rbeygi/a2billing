@@ -1,4 +1,4 @@
-apiVersion: v2
+apiVersion: v1
 name: a2billing
 description: DevOps Test Reza
 type: application

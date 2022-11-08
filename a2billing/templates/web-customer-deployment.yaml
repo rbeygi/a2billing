@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: web-customer
   labels:
@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: web-customer
-  replicas: { { .Values.web-customer.replicaCount } }
+  replicas: {{ .Values.webCustomer.replicaCount }}
   strategy:
     type: RollingUpdate
   template:
@@ -18,25 +18,13 @@ spec:
     spec:
       containers:
         - name: web-customer
-          image: {{ .Values.web-customer.image }}
+          image: {{ .Values.webCustomer.image }}
           ports:
             - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: mysql-configmap
           env:
-            - name: MYSQL_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: mysql-configmap
-                  key: MYSQL_HOST
-            - name: MYSQL_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: mysql-configmap
-                  key: MYSQL_PORT
-            - name: MYSQL_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: mysql-configmap
-                  key: MYSQL_DATABASE
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:

@@ -1,4 +1,4 @@
-Version: networking.k8s.io/v1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: a2billing
@@ -8,14 +8,14 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: {{ .Values.web-customer.ingressPath }}
+        path: {{ .Values.webCustomer.ingressPath }}
         backend:
           service:
             name: web-customer
             port:
               number: 80
       - pathType: Prefix
-        path: {{ .Values.web-admin.ingressPath }}
+        path: {{ .Values.webAdmin.ingressPath }}
         backend:
           service:
             name: web-admin

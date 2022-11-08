@@ -53,28 +53,28 @@ execute_helm() {
         echo -e "${red}Action and Project name are required.${clear}"
         script_usage
       fi
-        helm install --name ${project_name} ./${project_name}/
+        microk8s.helm install ${project_name} ./${project_name}/
       ;;
     upgrade )
       if [[ -z ${project_name} || -z ${action} ]] ; then
         echo -e "${red}Action and Project name are required.${clear}"
         script_usage
       fi
-        helm upgrade ${project_name} ./${project_name}/
+        microk8s.helm upgrade ${project_name} ./${project_name}/
       ;;
     rollback )
       if [[ -z ${project_name} || -z ${action} || -z ${project_version} ]] ; then
         echo -e "${red}Action and Project name and Version are required.${clear}"
         script_usage
       fi
-        helm rollback ${project_name} ${project_version}
+        microk8s.helm rollback ${project_name} ${project_version}
       ;;
     delete )
       if [[ -z ${project_name} || -z ${action} ]] ; then
         echo -e "${red}Action and Project name are required.${clear}"
         script_usage
       fi
-        helm delete ${project_name} 
+        microk8s.helm delete ${project_name} 
       ;;
     * )
       echo -e "${red}Undefined action, exiting.${clear}"

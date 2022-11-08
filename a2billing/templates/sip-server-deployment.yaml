@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: sip-server
   labels:
@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: sip-server
-  replicas: { { .Values.replicaCount } }
+  replicas: {{ .Values.replicaCount }}
   strategy:
     type: RollingUpdate
   template:
@@ -21,23 +21,10 @@ spec:
           image: {{ .Values.asterisk.image }}
           envFrom:
             - configMapRef:
-              name: asterisk-configmap
+                name: asterisk-configmap
+            - configMapRef:
+                name: mysql-configmap
           env:
-            - name: MYSQL_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: mysql-configmap
-                  key: MYSQL_HOST
-            - name: MYSQL_PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: mysql-configmap
-                  key: MYSQL_PORT
-            - name: MYSQL_DATABASE
-              valueFrom:
-                configMapKeyRef:
-                  name: mysql-configmap
-                  key: MYSQL_DATABASE
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
@@ -54,28 +41,19 @@ spec:
             - containerPort: 5060
               protocol: TCP
           volumeMounts:
-            - name: astrisk-config
+            - name: asterisk-config
               mountPath: /etc/asterisk
             - name: astrisk-data
               mountPath: /var/lib/asterisk
             - name: astrisk-data-spool
               mountPath: /var/spool/asterisk
       volumes:
-        - name: asterisk-persistent-storage
-          persistentVolumeClaim:
-            claimName: asterisk-pv-claim
-
----
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: asterisk-pv-claim
-  labels:
-    app: sip-server
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 30Gi
+      - name: asterisk-config
+        persistentVolumeClaim:
+          claimName: asterisk-pvsc
+      - name: astrisk-data
+        persistentVolumeClaim:
+          claimName: asterisk-pvsc
+      - name: astrisk-data-spool
+        persistentVolumeClaim:
+          claimName: asterisk-pvsc
