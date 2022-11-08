@@ -5,7 +5,7 @@ metadata:
     app: phpmyadmin
   name: phpmyadmin
 spec:
-  replicas: {{ .Values.phpmyadmin.replicaCount }}
+  replicas: {{ .Values.phpMyAdmin.replicaCount }}
   selector:
     matchLabels:
       app: phpmyadmin
@@ -18,7 +18,7 @@ spec:
         - image: phpmyadmin/phpmyadmin
           name: phpmyadmin
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           env:
             - name: PMA_HOST
               value: mysql

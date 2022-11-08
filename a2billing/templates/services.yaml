@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-customer
+  name: web-customer-server
 spec:
   selector:
     app: web-customer
@@ -13,7 +13,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-admin
+  name: web-admin-server
 spec:
   selector:
     app: web-admin

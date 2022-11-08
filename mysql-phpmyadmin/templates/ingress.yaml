@@ -8,7 +8,7 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: {{ .Values.phpmyadmin.ingressPath }}
+        path: {{ .Values.phpMyAdmin.ingressPath }}
         backend:
           service:
             name: phpmyadmin

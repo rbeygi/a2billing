@@ -1,6 +1,6 @@
 mysql:
   replicaCount: 1
 
-phpmyadmin:
+phpMyAdmin:
   ingressPath: /phpmyadmin
   replicaCount: 1
