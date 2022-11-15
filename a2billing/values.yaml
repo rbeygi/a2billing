@@ -1,13 +1,13 @@
 webAdmin:
   replicaCount: 1
-  image: admin:dev
+  image: localhost:32000/admin:10
   ingressPath: /admin
 
 webCustomer:
   replicaCount: 1
-  image: customer:dev
+  image: localhost:32000/customer:10
   ingressPath: /customer
 
 asterisk:
   replicaCount: 1
-  image: asterisk:dev
+  image: localhost:32000/asterisk:10

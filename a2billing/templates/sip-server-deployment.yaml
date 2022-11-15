@@ -40,20 +40,20 @@ spec:
               protocol: UDP
             - containerPort: 5060
               protocol: TCP
-          volumeMounts:
-            - name: asterisk-config
-              mountPath: /etc/asterisk
-            - name: astrisk-data
-              mountPath: /var/lib/asterisk
-            - name: astrisk-data-spool
-              mountPath: /var/spool/asterisk
-      volumes:
-      - name: asterisk-config
-        persistentVolumeClaim:
-          claimName: asterisk-pvsc
-      - name: astrisk-data
-        persistentVolumeClaim:
-          claimName: asterisk-pvsc
-      - name: astrisk-data-spool
-        persistentVolumeClaim:
-          claimName: asterisk-pvsc
+      #     volumeMounts:
+      #       - name: asterisk-config
+      #         mountPath: /etc/asterisk
+      #       - name: astrisk-data
+      #         mountPath: /var/lib/asterisk
+      #       - name: astrisk-data-spool
+      #         mountPath: /var/spool/asterisk
+      # volumes:
+      # - name: asterisk-config
+      #   persistentVolumeClaim:
+      #     claimName: asterisk-pvsc
+      # - name: astrisk-data
+      #   persistentVolumeClaim:
+      #     claimName: asterisk-pvsc
+      # - name: astrisk-data-spool
+      #   persistentVolumeClaim:
+      #     claimName: asterisk-pvsc

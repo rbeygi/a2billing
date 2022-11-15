@@ -1,0 +1,22 @@
+FROM php:7.0-apache
+LABEL maintainer="RezaB r-beygi@hotmail.com"
+
+RUN apt-get update ; apt-get install zip unzip -y
+
+WORKDIR /usr/local/src/a2billing
+COPY ./reza-test .
+
+RUN curl -sS https://getcomposer.org/installer | php
+RUN php composer.phar update
+RUN php composer.phar install
+
+RUN ls -lh
+COPY a2billing.conf /etc/
+
+RUN chmod 755 /usr/local/src/a2billing/admin/templates_c ;\
+    chown -Rf www-data:www-data /usr/local/src/a2billing/admin/templates_c
+
+WORKDIR /var/www/html
+RUN ln -s /usr/local/src/a2billing/admin .
+
+EXPOSE 80

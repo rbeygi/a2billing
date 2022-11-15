@@ -53,7 +53,7 @@ execute_helm() {
         echo -e "${red}Action and Project name are required.${clear}"
         script_usage
       fi
-        microk8s.helm install ${project_name} ./${project_name}/
+        microk8s.helm install --set image=$IMAGE_TAG ${project_name} ./${project_name}/
       ;;
     upgrade )
       if [[ -z ${project_name} || -z ${action} ]] ; then

@@ -1,23 +1,22 @@
-#!/bin/bash -x
+#!/bin/bash
 
 # Set color variables
 red='\033[0;31m'
 cyan='\033[0;36m'
 clear='\033[0m'
 
-tag_name=dev
-
 script_usage() {
   echo
-  echo "Usage: $0 -p PROJECT_NAME"
+  echo "Usage: $0 -p PROJECT_NAME -t TAG_NAME"
   echo
   echo "Switches:"
   echo -e "\t-p\t\tSpecify Project Name (admin, customer, asterisk) - required for build."
+  echo -e "\t-p\t\tSpecify Tag Image Name (236, dev) - required for build."
   echo
   echo "Examples:"
-  echo -e "\t$0 -p admin"
-  echo -e "\t$0 -p customer"
-  echo -e "\t$0 -p asterisk"
+  echo -e "\t$0 -p admin -t dev"
+  echo -e "\t$0 -p customer -t 563"
+  echo -e "\t$0 -p asterisk -t prod"
   exit 1
 }
 
@@ -47,24 +46,27 @@ execute_docker_build() {
         echo -e "${red}Tag Name and Project name are required.${clear}"
         script_usage
       fi
-        cd build/${project_name}/
-        docker build -t ${project_name}:${tag_name} .
+        docker build . -t ${project_name}:${tag_name} -f Dockerfile-admin
+        docker tag ${project_name}:${tag_name} localhost:32000/${project_name}:${tag_name}
+        docker push localhost:32000/${project_name}:${tag_name}
       ;;
     customer )
       if [[ -z ${project_name} || -z ${tag_name} ]] ; then
         echo -e "${red}Tag Name and Project name are required.${clear}"
         script_usage
       fi
-        cd build/${project_name}/
-        docker build -t ${project_name}:${tag_name} .
+        docker build . -t ${project_name}:${tag_name} -f Dockerfile-customer
+        docker tag ${project_name}:${tag_name} localhost:32000/${project_name}:${tag_name}
+        docker push localhost:32000/${project_name}:${tag_name}
       ;;
     asterisk )
       if [[ -z ${project_name} || -z ${tag_name} ]] ; then
         echo -e "${red}Tag Name and Project name are required.${clear}"
         script_usage
       fi
-        cd build/${project_name}/
-        docker build -t ${project_name}:${tag_name} .
+        docker build . -t ${project_name}:${tag_name} -f asterisk/Dockerfile
+        docker tag ${project_name}:${tag_name} localhost:32000/${project_name}:${tag_name}
+        docker push localhost:32000/${project_name}:${tag_name}
       ;;
     * )
       echo -e "${red}Undefined action, exiting.${clear}"
@@ -76,6 +78,8 @@ execute_docker_build() {
 if [[ -z ${project_name} || -z ${tag_name} ]]; then
   script_usage
 else
+  echo "IMAGE_TAG=${tag_name}" > .env
+  export $(cat .env)
   execute_docker_build
 fi
 
