@@ -9,7 +9,10 @@ spec:
     - protocol: TCP
       port: 3306
       targetPort: 3306
-
+  selector:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/instance: ingress-nginx
+    app.kubernetes.io/component: controller
 ---
 
 apiVersion: v1
@@ -23,3 +26,7 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 80
+  selector:
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/instance: ingress-nginx
+    app.kubernetes.io/component: controller
